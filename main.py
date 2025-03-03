@@ -1,4 +1,6 @@
 from turtle import Screen
+
+import scoreBoard
 from snake import Snake
 from food import Food
 from scoreBoard import ScoreBoard
@@ -32,11 +34,19 @@ while game_is_on:
     # collsion of food and snake
     if snake.head.distance(food) < 15:
         food.refresh()
+        snake.extend()
         score.increase_score()
 
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
         game_is_on=False
         score.game_over()
+
+    for segment in snake.segments:
+        if segment == snake.head:
+            pass
+        elif snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreBoard.game_over()
 
 
 screen.exitonclick()
